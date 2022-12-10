@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TripAdministrations
 {
@@ -59,22 +60,29 @@ namespace TripAdministrations
 
         public void ExecuteTrip(Company c, Trip t)
         {
-            throw new NotImplementedException();
+            if (!companiesByNames.ContainsKey(c.Name))
+            {
+                throw new ArgumentException();
+            }
+            if (!tripsById.ContainsKey(t.Id))
+            {
+                throw new ArgumentException();
+            }
+            if (!c.Trips.Contains(t))
+            {
+                throw new ArgumentException();
+            }
+
+            c.Trips.Remove(t);
         }
 
         public IEnumerable<Company> GetCompaniesWithMoreThatNTrips(int n)
-        {
-            throw new NotImplementedException();
-        }
+            => companiesByNames.Values.Where(c => c.Trips.Count > n);
 
         public IEnumerable<Trip> GetTripsWithTransportationType(Transportation t)
-        {
-            throw new NotImplementedException();
-        }
+            => tripsById.Values.Where(t => t.Transportation.ToString() == t.ToString());
 
         public IEnumerable<Trip> GetAllTripsInPriceRange(int lo, int hi)
-        {
-            throw new NotImplementedException();
-        }
+            => tripsById.Values.Where(t => t.Price >= lo && t.Price <= hi);
     }
 }
