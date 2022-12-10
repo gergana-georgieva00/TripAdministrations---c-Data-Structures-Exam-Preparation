@@ -28,6 +28,8 @@ namespace TripAdministrations
 
             c.Trips.Add(t);
             t.Company = c;
+            c.CurrentTrips++;
+            tripsById.Add(t.Id, t);
         }
 
         public bool Exist(Company c)
@@ -74,13 +76,14 @@ namespace TripAdministrations
             }
 
             c.Trips.Remove(t);
+            c.CurrentTrips--;
         }
 
         public IEnumerable<Company> GetCompaniesWithMoreThatNTrips(int n)
             => companiesByNames.Values.Where(c => c.Trips.Count > n);
 
         public IEnumerable<Trip> GetTripsWithTransportationType(Transportation t)
-            => tripsById.Values.Where(t => t.Transportation.ToString() == t.ToString());
+            => tripsById.Values.Where(tr => tr.Transportation == t);
 
         public IEnumerable<Trip> GetAllTripsInPriceRange(int lo, int hi)
             => tripsById.Values.Where(t => t.Price >= lo && t.Price <= hi);
