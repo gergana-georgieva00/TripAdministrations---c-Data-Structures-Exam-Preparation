@@ -76,6 +76,8 @@ namespace TripAdministrations
             }
 
             c.Trips.Remove(t);
+            tripsById.Remove(t.Id);
+            t.Company = null;
             c.CurrentTrips--;
         }
 
