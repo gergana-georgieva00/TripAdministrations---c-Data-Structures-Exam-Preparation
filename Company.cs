@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace TripAdministrations
 {
     public class Company
@@ -7,6 +9,7 @@ namespace TripAdministrations
         {
             this.Name = name;
             this.TripOrganizationLimit = tripOrganizationLimit;
+            Trips = new List<Trip>();
         }
 
         public string Name { get; set; }
@@ -14,5 +17,6 @@ namespace TripAdministrations
         public int TripOrganizationLimit { get; set; }
 
         public int CurrentTrips { get; set; }
+        public List<Trip> Trips { get; set; }
     }
 }

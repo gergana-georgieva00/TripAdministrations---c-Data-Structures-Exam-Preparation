@@ -10,38 +10,52 @@ namespace TripAdministrations
 
         public void AddCompany(Company c)
         {
-            throw new NotImplementedException();
+            if (companiesByNames.ContainsKey(c.Name))
+            {
+                throw new ArgumentException();
+            }
+
+            companiesByNames.Add(c.Name, c);
         }
 
         public void AddTrip(Company c, Trip t)
         {
-            throw new NotImplementedException();
+            if (!companiesByNames.ContainsKey(c.Name))
+            {
+                throw new ArgumentException();
+            }
+
+            c.Trips.Add(t);
+            t.Company = c;
         }
 
         public bool Exist(Company c)
-        {
-            throw new NotImplementedException();
-        }
+            => companiesByNames.ContainsKey(c.Name);
 
         public bool Exist(Trip t)
-        {
-            throw new NotImplementedException();
-        }
+            => tripsById.ContainsKey(t.Id);
 
         public void RemoveCompany(Company c)
         {
-            throw new NotImplementedException();
+            if (!companiesByNames.ContainsKey(c.Name))
+            {
+                throw new ArgumentException();
+            }
+
+            var trips = companiesByNames[c.Name].Trips;
+            companiesByNames.Remove(c.Name);
+
+            foreach (var trip in trips)
+            {
+                tripsById.Remove(trip.Id);
+            }
         }
 
         public IEnumerable<Company> GetCompanies()
-        {
-            throw new NotImplementedException();
-        }
+            => companiesByNames.Values;
 
         public IEnumerable<Trip> GetTrips()
-        {
-            throw new NotImplementedException();
-        }
+            => tripsById.Values;
 
         public void ExecuteTrip(Company c, Trip t)
         {

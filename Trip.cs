@@ -18,5 +18,6 @@ namespace TripAdministrations
         public Transportation Transportation { get; set; }
 
         public int Price { get; set; }
+        public Company Company { get; set; }
     }
 }
